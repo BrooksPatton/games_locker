@@ -73,6 +73,14 @@ var updateGame = function(req, res){
 	});
 };
 
+var deleteGame = function(req, res){
+	Game.findByIdAndRemove(req.params.game_id, function(err){
+		if(err) return res.send(err);
+		
+		res.json({message: 'Game has been removed from the locker!'});
+	});
+};
+
 // function declarations
 
 
@@ -89,6 +97,7 @@ gamesRoute.post(createGame);
 gamesRoute.get(getAllGames);
 gameSingleRoute.get(getOneGame);
 gameSingleRoute.put(updateGame);
+gameSingleRoute.delete(deleteGame);
 
 app.use('/api', router);
 
