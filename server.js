@@ -91,6 +91,8 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
+app.use(bodyParser.json());
+
 router.get('/', indexRoute);
 
 gamesRoute.post(createGame);
