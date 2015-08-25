@@ -56,6 +56,23 @@ var getOneGame = function(req, res){
 	});
 };
 
+var updateGame = function(req, res){
+	Game.findById(req.params.game_id, function(err, game){
+		if(err) return res.send(err);
+		
+		game.name = req.body.name;
+		game.genre = req.body.genre;
+		game.vendor = req.body.vendor;
+		game.platform = req.body.platform;
+		
+		game.save(function(err, game){
+			if(err) return res.send(err);
+			
+			res.json(game);
+		});
+	});
+};
+
 // function declarations
 
 
@@ -71,6 +88,7 @@ router.get('/', indexRoute);
 gamesRoute.post(createGame);
 gamesRoute.get(getAllGames);
 gameSingleRoute.get(getOneGame);
+gameSingleRoute.put(updateGame);
 
 app.use('/api', router);
 
