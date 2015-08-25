@@ -3,6 +3,7 @@ var PORT = process.env.PORT || 3000;
 
 // npm requires
 var express = require('express');
+var mongoose = require('mongoose');
 
 // local requires
 
@@ -22,6 +23,8 @@ var indexRoute = function(req, res){
 
 
 // main
+mongoose.connect('mongodb://localhost:27017/games_locker');
+
 router.get('/', indexRoute);
 
 app.use('/api', router);
