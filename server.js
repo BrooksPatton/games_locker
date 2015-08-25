@@ -6,7 +6,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 // local requires
-
+var Game = require('./models/games');
 
 // variable declarations
 var app = express();
