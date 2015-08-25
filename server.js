@@ -13,6 +13,7 @@ var Game = require('./models/games');
 var app = express();
 var router = express.Router();
 var gamesRoute = router.route('/games');
+var gameSingleRoute = router.route('/games/:game_id');
 
 // callback function declarations
 var indexRoute = function(req, res){
@@ -47,6 +48,14 @@ var getAllGames = function(req, res){
 	});
 };
 
+var getOneGame = function(req, res){
+	Game.findById(req.params.game_id, function(err, game){
+		if(err) return res.send(err);
+		
+		res.json(game);
+	});
+};
+
 // function declarations
 
 
@@ -61,6 +70,7 @@ router.get('/', indexRoute);
 
 gamesRoute.post(createGame);
 gamesRoute.get(getAllGames);
+gameSingleRoute.get(getOneGame);
 
 app.use('/api', router);
 
