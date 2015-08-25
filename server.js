@@ -4,6 +4,7 @@ var PORT = process.env.PORT || 3000;
 // npm requires
 var express = require('express');
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
 // local requires
 var Game = require('./models/games');
@@ -24,6 +25,10 @@ var indexRoute = function(req, res){
 
 // main
 mongoose.connect('mongodb://localhost:27017/games_locker');
+
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 router.get('/', indexRoute);
 
