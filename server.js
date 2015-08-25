@@ -39,6 +39,14 @@ var createGame = function(req, res){
 	});
 };
 
+var getAllGames = function(req, res){
+	Game.find(function(err, games){
+		if(err) return res.send(err);
+		
+		res.json(games);
+	});
+};
+
 // function declarations
 
 
@@ -52,6 +60,7 @@ app.use(bodyParser.urlencoded({
 router.get('/', indexRoute);
 
 gamesRoute.post(createGame);
+gamesRoute.get(getAllGames);
 
 app.use('/api', router);
 
