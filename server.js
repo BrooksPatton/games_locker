@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 
 // local requires
 var gameRoutes = require('./routes/games');
+var userRoutes = require('./routes/users');
 
 // variable declarations
 var app = express();
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use('/api', gameRoutes);
+app.use('/api', userRoutes);
 
 app.listen(PORT);
 console.log('Insert game on port ' + PORT);
