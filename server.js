@@ -10,6 +10,7 @@ var passport = require('passport');
 // local requires
 var gameRoutes = require('./routes/games');
 var userRoutes = require('./routes/users');
+var clientRoutes = require('./routes/client');
 
 // variable declarations
 var app = express();
@@ -31,6 +32,7 @@ app.use(passport.initialize());
 
 app.use('/api', gameRoutes);
 app.use('/api', userRoutes);
+app.use('/api', clientRoutes);
 
 app.listen(PORT);
 console.log('Insert game on port ' + PORT);
