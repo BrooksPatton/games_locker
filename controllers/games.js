@@ -22,8 +22,6 @@ var createGame = function(req, res){
 	game.vendor = req.body.vendor;
 	game.platform = req.body.platform;
 	game.userId = req.user._id;
-
-	console.log(req.user);
 	
 	game.save(function(err, game){
 		if(err) return res.send(err);
