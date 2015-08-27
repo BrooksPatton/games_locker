@@ -5,6 +5,7 @@ var PORT = process.env.PORT || 3000;
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var passport = require('passport');
 
 // local requires
 var gameRoutes = require('./routes/games');
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
 app.use('/api', gameRoutes);
 app.use('/api', userRoutes);

@@ -16,6 +16,8 @@ var should = chai.should();
 var game1;
 var chance = new Chance();
 var game2;
+var user1;
+var userApi = supertest('localhost:3000/api/users');
 
 // callback function declarations
 var game = function(){
@@ -27,12 +29,30 @@ var game = function(){
 	}; 
 };
 
+var user = function(){
+	return {
+		username: chance.first(),
+		password: chance.string()
+	};
+};
+
 // function declarations
 
 
 // main
 chance.mixin({
-	game: game 
+	game: game,
+	user: user
+});
+
+describe('Preparing for the game-crud tests by', function(){
+	it('creating user1', function(done){
+		user1 = chance.user();
+
+		userApi.post('/')
+		.send(user1)
+		.expect(200, done);
+	});
 });
 
 describe('Sending a POST to /api/games', function(){
@@ -41,6 +61,7 @@ describe('Sending a POST to /api/games', function(){
 			var chanceGame = chance.game();
 			
 			gameApi.post('/')
+			.auth(user1.username, user1.password)
 			.send(chanceGame)
 			.expect(200)
 			.end(function(err, res){
@@ -62,6 +83,7 @@ describe('Sending a POST to /api/games', function(){
 			var chanceGame = chance.game();
 			
 			gameApi.post('/')
+			.auth(user1.username, user1.password)
 			.send(chanceGame)
 			.expect(200)
 			.end(function(err, res){
@@ -85,6 +107,7 @@ describe('Sending a GET to /api/games', function(){
 	describe('should succeed', function(){
 		it('in getting an array of all games', function(done){
 			gameApi.get('/')
+			.auth(user1.username, user1.password)
 			.expect(200)
 			.end(function(err, res){
 				if(err) return done(err);
@@ -110,6 +133,7 @@ describe('Sending a GET to /api/games/{game_id}', function(){
 	describe('should succeed', function(){
 		it('in gettin a single game', function(done){
 			gameApi.get('/' + game1._id)
+			.auth(user1.username, user1.password)
 			.expect(200)
 			.end(function(err, res){
 				if(err) return done(err);
@@ -137,6 +161,7 @@ describe('Sending a PUT to /api/games/{game_id}', function(){
 			update.name = chance.name();
 			
 			gameApi.put('/' + update._id)
+			.auth(user1.username, user1.password)
 			.send(update)
 			.expect(200)
 			.end(function(err, res){
@@ -160,6 +185,7 @@ describe('Sending a DELETE to /api/games/{game_id}', function(){
 	describe('should succeed', function(){
 		it('in removing the game', function(done){
 			gameApi.del('/' + game1._id)
+			.auth(user1.username, user1.password)
 			.expect(200)
 			.end(function(err, res){
 				if(err) return done(err);
@@ -172,6 +198,7 @@ describe('Sending a DELETE to /api/games/{game_id}', function(){
 		
 		it('in removing the second game', function(done){
 			gameApi.del('/' + game2._id)
+			.auth(user1.username, user1.password)
 			.expect(200)
 			.end(function(err, res){
 				if(err) return done(err);

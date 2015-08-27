@@ -6,6 +6,7 @@ var express = require('express');
 
 // local requires
 var userController = require('../controllers/users');
+var authController = require('../controllers/auth');
 
 // variable declarations
 var router = express.Router();
@@ -19,11 +20,11 @@ var router = express.Router();
 // main
 router.route('/users')
 .post(userController.createUser)
-.get(userController.getAllUsers);
+.get(authController.isAuthenticated, userController.getAllUsers);
 
 router.route('/users/:user_id')
-.get(userController.getOneUser)
-.put(userController.updateUser)
-.delete(userController.deleteUser);
+.get(authController.isAuthenticated, userController.getOneUser)
+.put(authController.isAuthenticated, userController.updateUser)
+.delete(authController.isAuthenticated, userController.deleteUser);
 
 module.exports = router;

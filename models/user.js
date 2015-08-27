@@ -45,4 +45,8 @@ var preSave = function(callback){
 // main
 UserSchema.pre('save', preSave);
 
+UserSchema.methods.verifyPassword = function(password, cb){
+	bcrypt.compare(password, this.password, cb);
+};
+
 module.exports = mongoose.model('User', UserSchema);
