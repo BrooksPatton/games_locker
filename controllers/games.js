@@ -21,6 +21,9 @@ var createGame = function(req, res){
 	game.genre = req.body.genre;
 	game.vendor = req.body.vendor;
 	game.platform = req.body.platform;
+	game.userId = req.user._id;
+
+	console.log(req.user);
 	
 	game.save(function(err, game){
 		if(err) return res.send(err);
@@ -33,7 +36,7 @@ var createGame = function(req, res){
 };
 
 var getAllGames = function(req, res){
-	Game.find(function(err, games){
+	Game.find({userId: req.user._id}, function(err, games){
 		if(err) return res.send(err);
 		
 		res.json(games);
@@ -41,7 +44,10 @@ var getAllGames = function(req, res){
 };
 
 var getOneGame = function(req, res){
-	Game.findById(req.params.game_id, function(err, game){
+	Game.findOne({
+		_id: req.params.game_id,
+		userId: req.user._id
+	}, function(err, game){
 		if(err) return res.send(err);
 		
 		res.json(game);
@@ -49,7 +55,10 @@ var getOneGame = function(req, res){
 };
 
 var updateGame = function(req, res){
-	Game.findById(req.params.game_id, function(err, game){
+	Game.findOne({
+		_id: req.params.game_id,
+		userId: req.user._id
+	}, function(err, game){
 		if(err) return res.send(err);
 		
 		game.name = req.body.name;
@@ -66,7 +75,10 @@ var updateGame = function(req, res){
 };
 
 var deleteGame = function(req, res){
-	Game.findByIdAndRemove(req.params.game_id, function(err){
+	Game.remove({
+		_id: req.params.game_id,
+		userId: req.user._id
+	}, function(err){
 		if(err) return res.send(err);
 		
 		res.json({message: 'Game has been removed from the locker!'});

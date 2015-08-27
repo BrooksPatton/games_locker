@@ -79,6 +79,7 @@ describe('Sending a POST to /api/games', function(){
 				res.body.data.genre.should.be.equal(chanceGame.genre);
 				res.body.data.vendor.should.be.equal(chanceGame.vendor);
 				res.body.data.platform.should.be.equal(chanceGame.platform);
+				res.body.data.userId.should.be.equal(user1._id);
 				
 				game1 = res.body.data;
 				
@@ -101,6 +102,7 @@ describe('Sending a POST to /api/games', function(){
 				res.body.data.genre.should.be.equal(chanceGame.genre);
 				res.body.data.vendor.should.be.equal(chanceGame.vendor);
 				res.body.data.platform.should.be.equal(chanceGame.platform);
+				res.body.data.userId.should.be.equal(user1._id);
 				
 				game2 = res.body.data;
 				

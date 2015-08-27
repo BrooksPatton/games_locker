@@ -12,7 +12,8 @@ var GameSchema = new mongoose.Schema({
 	name: String,
 	genre: String,
 	vendor: String,
-	platform: String
+	platform: String,
+	userId: String
 });
 
 // callback function declarations
