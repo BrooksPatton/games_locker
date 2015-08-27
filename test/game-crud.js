@@ -51,7 +51,14 @@ describe('Preparing for the game-crud tests by', function(){
 
 		userApi.post('/')
 		.send(user1)
-		.expect(200, done);
+		.expect(200)
+		.end(function(err, res){
+			if(err) return done(err);
+
+			user1._id = res.body.data._id;
+
+			done();
+		});
 	});
 });
 
@@ -208,5 +215,13 @@ describe('Sending a DELETE to /api/games/{game_id}', function(){
 				done();
 			});
 		});
+	});
+});
+
+describe('Cleaning up after the game crud tests by', function(){
+	it('removing user1', function(done){
+		userApi.del('/' + user1._id)
+		.auth(user1.username, user1.password)
+		.expect(200, done);
 	});
 });
