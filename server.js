@@ -6,6 +6,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var jade = require('jade');
 
 // local requires
 var gameRoutes = require('./routes/games');
@@ -29,6 +30,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
+
+app.set('view engine', 'jade');
 
 app.use('/api', gameRoutes);
 app.use('/api', userRoutes);
