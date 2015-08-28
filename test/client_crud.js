@@ -21,9 +21,7 @@ var userApi = supertest('localhost:3000/api/users');
 // callback function declarations
 var client = function(){
 	return {
-		name: chance.name(),
-		id: chance.string(),
-		secret: chance.string()
+		name: chance.name()
 	}; 
 };
 
@@ -74,8 +72,8 @@ describe('Sending a POST to /api/clients', function(){
 				
 				res.body.message.should.be.equal('Client added to the locker!');
 				res.body.data.name.should.be.equal(chanceClient.name);
-				res.body.data.id.should.be.equal(chanceClient.id);
-				res.body.data.secret.should.be.equal(chanceClient.secret);
+				res.body.data.id.should.be.a('string');
+				res.body.data.secret.should.be.a('string');
 				res.body.data.userId.should.be.equal(user1._id);
 				
 				client1 = res.body.data;

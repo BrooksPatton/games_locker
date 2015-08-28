@@ -3,6 +3,7 @@
 
 // npm requires
 var mongoose = require('mongoose');
+var uid = require('uid');
 
 // local requires
 
@@ -10,8 +11,20 @@ var mongoose = require('mongoose');
 // variable declarations
 var ClientSchema = new mongoose.Schema({
 	name: {type: String, unique: true, required: true},
-	id: {type: String, required: true},
-	secret: {type: String, required: true},
+	id: {
+		type: String,
+		required: true,
+		default: function(){
+			return uid(8);
+		}
+	},
+	secret: {
+		type: String,
+		required: true,
+		default: function(){
+			return uid(24);
+		}
+	},
 	userId: {type: String, required: true}
 });
 
