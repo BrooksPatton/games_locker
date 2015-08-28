@@ -49,6 +49,7 @@ server.grant(oauth2orize.grant.code(function(client, redirectUri, user, ares, ca
 }));
 
 server.exchange(oauth2orize.exchange.code(function(client, code, redirectUri, callback){
+	console.log(authCode);
 	Code.findOne({value: code}, function(err, authCode){
 		if(err) return callback(err);
 		if(!authCode) return callback(null, false);
