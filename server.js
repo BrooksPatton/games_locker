@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var jade = require('jade');
+var session = require('express-session');
 
 // local requires
 var gameRoutes = require('./routes/games');
@@ -30,6 +31,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
+app.use(session({
+	secret: 'ryfulpj8&%*&^PLJGJLedhaendhernhd',
+	saveUninitialized: true,
+	resave: true
+}));
 
 app.set('view engine', 'jade');
 
