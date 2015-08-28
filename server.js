@@ -13,6 +13,7 @@ var session = require('express-session');
 var gameRoutes = require('./routes/games');
 var userRoutes = require('./routes/users');
 var clientRoutes = require('./routes/client');
+var oauth2Routes = require('./routes/oauth2');
 
 // variable declarations
 var app = express();
@@ -42,6 +43,7 @@ app.set('view engine', 'jade');
 app.use('/api', gameRoutes);
 app.use('/api', userRoutes);
 app.use('/api', clientRoutes);
+app.use('/api', oauth2Routes);
 
 app.listen(PORT);
 console.log('Insert game on port ' + PORT);
