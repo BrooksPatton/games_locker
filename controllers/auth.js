@@ -7,6 +7,7 @@ var BasicStrategy = require('passport-http').BasicStrategy;
 
 // local requires
 var User = require('../models/user');
+var Client = require('../models/client');
 
 // variable declarations
 
@@ -34,5 +35,17 @@ passport.use(new BasicStrategy(
 			});
 		});
 	}));
+	
+passport.use('client-basic', new BasicStrategy(function(username, password, callback){
+	Client.findOne({id: username}, function(err, client){
+		if(err) return callback(err);
+		
+		if(!client) return callback(null, false);
+		
+		if(client.secret !== password) return callback(null, false);
+		
+		callback(null, client);
+	});
+}));
 
 exports.isAuthenticated = passport.authenticate('basic', {session: false});
