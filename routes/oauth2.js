@@ -23,6 +23,6 @@ router.route('/oauth2/authorize')
 .post(authController.isAuthenticated, oauth2Controller.decision);
 
 router.route('/oauth2/token')
-.post(authController.isAuthenticated, oauth2Controller.token);
+.post(authController.isClientAuthenticated, oauth2Controller.token);
 
 module.exports = router;
